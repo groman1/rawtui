@@ -1,17 +1,33 @@
-#include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/ioctl.h>
 
+#define colorpair_t uint8_t
 #define attr_t uint8_t
 #define NORMAL 1
 #define BOLD 1<<1
 #define FAINT 1<<2
-#define REVERSE 1<<3
+#define BLINK 1<<3
+#define REVERSE 1<<4
+
+#define BLACK 0
+#define	RED 1
+#define GREEN 2
+#define YELLOW 3
+#define BLUE 4
+#define MAGENTA 5
+#define CYAN 6
+#define WHITE 7
 
 struct termios originalterminal;
+colorpair_t pairs[8];
+
+void initcolorpair(uint8_t id, uint8_t foreground, uint8_t background)
+{
+	if (id<8) pairs[id] = foreground<<4|background;
+}
 
 void init()
 {
@@ -19,6 +35,7 @@ void init()
 	struct termios terminal;
 	cfmakeraw(&terminal);
 	tcsetattr(STDIN_FILENO, 0, &terminal);
+	initcolorpair(0, WHITE, BLACK);
 }
 
 void deinit()
@@ -60,11 +77,6 @@ uint16_t in(void)
 	return ret;
 }
 
-void clear()
-{
-	write(STDOUT_FILENO, "\x1b[1J", 4);
-}
-
 void saveCursorPos()
 {
 	write(STDOUT_FILENO, "\x1b[s", 3);
@@ -81,6 +93,15 @@ void wrattr(attr_t attr)
 	if (attr&BOLD) write(STDOUT_FILENO, "\x1b[1m", 4);
 	if (attr&FAINT) write(STDOUT_FILENO, "\x1b[2m", 4);
 	if (attr&REVERSE) write(STDOUT_FILENO, "\x1b[7m", 4);
+	char colorstring[8] = "\x1b[30;47m";
+	colorstring[3] = (pairs[attr>>5]>>4)+48;
+	colorstring[6] = (pairs[attr>>5]%16)+48;
+	write(STDOUT_FILENO, colorstring, 8);
+}
+
+void clear()
+{
+	write(STDOUT_FILENO, "\x1b[1J", 4);
 }
 
 void getTermXY(uint8_t *y, uint8_t *x)
@@ -117,7 +138,7 @@ void getCursorPos(uint8_t *y, uint8_t *x)
 
 void clearline()
 {
-	write(STDIN_FILENO, "\x1b[2K", 4);
+	write(STDOUT_FILENO, "\x1b[2K", 4);
 }
 
 void print(char *string)

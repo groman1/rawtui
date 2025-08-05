@@ -15,11 +15,14 @@ int main()
 	setcursor(0);
 	move(8,100);
 	dprintf(STDOUT_FILENO, "%d:%d", y, x);
-	wrattr(REVERSE);
+	initcolorpair(1, BLACK, RED);
+	wrattr(COLORPAIR(1));
 	do
 	{
 		move(10, 101);
-		clearline();
+		wrattr(NORMAL);
+		clearline(); // if you use color and call clearline, the line will be filled with that color, so we need to disable it first
+		wrattr(COLORPAIR(1));
 		dprintf(STDOUT_FILENO, "%u", code);
 	}
 	while((code=in())!=3);
