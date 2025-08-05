@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
 #include <stdint.h>
@@ -5,10 +6,9 @@
 #include <sys/ioctl.h>
 
 #define attr_t uint8_t
-#define NORMAL 1>>1
-#define BOLD 1<<0
-#define FAINT 1<<1
-#define BLINK 1<<2
+#define NORMAL 1
+#define BOLD 1<<1
+#define FAINT 1<<2
 #define REVERSE 1<<3
 
 struct termios originalterminal;
@@ -80,7 +80,6 @@ void wrattr(attr_t attr)
 	if (attr&NORMAL) write(STDOUT_FILENO, "\x1b[0m", 4);
 	if (attr&BOLD) write(STDOUT_FILENO, "\x1b[1m", 4);
 	if (attr&FAINT) write(STDOUT_FILENO, "\x1b[2m", 4);
-	if (attr&BLINK) write(STDOUT_FILENO, "\x1b[5m", 4);
 	if (attr&REVERSE) write(STDOUT_FILENO, "\x1b[7m", 4);
 }
 

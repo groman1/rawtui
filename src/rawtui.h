@@ -5,10 +5,9 @@
 #define RAWTUI_H_
 
 #define attr_t uint8_t
-#define NORMAL 1>>1
-#define BOLD 1<<0
-#define FAINT 1<<1
-#define BLINK 1<<2
+#define NORMAL 1
+#define BOLD 1<<1
+#define FAINT 1<<2
 #define REVERSE 1<<3
 
 void init();
