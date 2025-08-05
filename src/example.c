@@ -6,7 +6,7 @@
 
 int main()
 {
-	uint8_t y, x;
+	uint16_t y, x;
 	uint16_t code = 13;
 	char *string;
 	init();

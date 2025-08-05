@@ -50,7 +50,7 @@ void setcursor(uint8_t status)
 	else write(STDOUT_FILENO, "\x1b[?25l", 6);
 }
 
-void move(uint8_t y, uint8_t x)
+void move(uint16_t y, uint16_t x)
 {
 	char movecmd[10] = "\x1b[";
 	int currPos = 2;
@@ -104,7 +104,7 @@ void clear()
 	write(STDOUT_FILENO, "\x1b[1J", 4);
 }
 
-void getTermXY(uint8_t *y, uint8_t *x)
+void getTermXY(uint16_t *y, uint16_t *x)
 {
 	struct winsize win;
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win)) if (ioctl(STDIN_FILENO, TIOCGWINSZ, &win)) if (ioctl(STDERR_FILENO, TIOCGWINSZ, &win)) return;
@@ -112,7 +112,7 @@ void getTermXY(uint8_t *y, uint8_t *x)
 	*x = win.ws_col;
 }
 
-void getCursorPos(uint8_t *y, uint8_t *x)
+void getCursorPos(uint16_t *y, uint16_t *x)
 {
 	write(STDOUT_FILENO, "\x1b[6n", 4);
 	*y = 0;
@@ -144,4 +144,10 @@ void clearline()
 void print(char *string)
 {
 	write(STDOUT_FILENO, string, strlen(string));
+}
+
+void moveprint(uint16_t y, uint16_t x, char *string)
+{
+	move(y,x);
+	print(string);
 }

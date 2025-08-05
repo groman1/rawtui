@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include <stdint.h>
-#include <stdio.h>
 #ifndef RAWTUI_H_
 #define RAWTUI_H_
 
@@ -26,16 +25,17 @@
 void init();
 void deinit();
 void setcursor(uint8_t visible);
-void move(uint8_t y, uint8_t x);
+void move(uint16_t y, uint16_t x);
 void initcolorpair(uint8_t id, uint8_t foreground, uint8_t background);
 uint16_t in();
 void clear();
 void saveCursorPos();
 void loadCursorPos();
 void wrattr(attr_t attr);
-void getTermXY(uint8_t *y, uint8_t *x);
-void getCursorPos(uint8_t *y, uint8_t *x);
+void getTermXY(uint16_t *y, uint16_t *x);
+void getCursorPos(uint16_t *y, uint16_t *x);
 void clearline();
 void print(char *string);
+void moveprint(uint16_t y, uint16_t x, char *string);
 
 #endif
