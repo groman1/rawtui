@@ -103,7 +103,7 @@ void wrattr(attr_t attr)
 
 void clear()
 {
-	write(STDOUT_FILENO, "\x1b[1J", 4);
+	write(STDOUT_FILENO, "\x1b[2J", 4);
 }
 
 void getTermXY(uint16_t *y, uint16_t *x)
