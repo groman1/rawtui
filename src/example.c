@@ -13,13 +13,13 @@ int main()
 	getTermXY(&y, &x);
 	clear();
 	setcursor(0);
-	move(8,100);
+	move(y/2-2,x/2-3);
 	dprintf(STDOUT_FILENO, "%d:%d", y, x);
 	initcolorpair(1, BLACK, RED);
 	wrattr(COLORPAIR(1));
 	do
 	{
-		move(10, 101);
+		move(y/2, x/2-1);
 		wrattr(NORMAL);
 		clearline(); // if you use color and call clearline, the line will be filled with that color, so we need to disable it first
 		wrattr(COLORPAIR(1));
@@ -29,7 +29,7 @@ int main()
 	wrattr(NORMAL);
 	clear();
 	setcursor(1);
-	move(1,1);
+	move(0,0);
 	deinit();
 	return 0;
 }

@@ -52,6 +52,8 @@ void setcursor(uint8_t status)
 
 void move(uint16_t y, uint16_t x)
 {
+	++y;
+	++x;
 	char movecmd[10] = "\x1b[";
 	int currPos = 2;
 	for (int i = 100; i>0; i/=10)
@@ -134,6 +136,8 @@ void getCursorPos(uint16_t *y, uint16_t *x)
 		*x *= 10;
 		*x += *buffer-48;
 	}
+	--*y;
+	--*x;
 }
 
 void clearline()
