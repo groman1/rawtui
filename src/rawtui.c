@@ -89,7 +89,6 @@ uint8_t inesc()
 	read(STDIN_FILENO, &ret, 1);
 	if (ret==27)
 	{
-		ret = 0;
 		unsigned char buffer[2];
 		read(STDIN_FILENO, &buffer, 2);
 		switch (buffer[0])
