@@ -25,7 +25,7 @@ int main()
 		wrattr(COLORPAIR(1));
 		dprintf(STDOUT_FILENO, "%u", code);
 	}
-	while((code=in())!=3);
+	while((code=inesc())!=3);
 	wrattr(NORMAL);
 	clear();
 	setcursor(1);

@@ -36,6 +36,8 @@ void init()
 	cfmakeraw(&terminal);
 	tcsetattr(STDIN_FILENO, 0, &terminal);
 	initcolorpair(0, WHITE, BLACK);
+	write(STDOUT_FILENO, "\x1b[224;75;170", 12);
+	write(STDOUT_FILENO, "\x1b[224;75;170", 12);
 	write(STDOUT_FILENO, "\x1b[?1049h", 8);
 }
 
@@ -74,10 +76,71 @@ void move(uint16_t y, uint16_t x)
 	write(STDOUT_FILENO, movecmd, currPos);
 }
 
-uint16_t in(void)
+uint8_t in(void)
 {
-	char ret;
+	unsigned char ret;
 	read(STDIN_FILENO, &ret, 1);
+	return ret;
+}
+
+uint8_t inesc()
+{
+	unsigned char ret;
+	read(STDIN_FILENO, &ret, 1);
+	if (ret==27)
+	{
+		ret = 0;
+		unsigned char buffer[2];
+		read(STDIN_FILENO, &buffer, 2);
+		switch (buffer[0])
+		{
+			case 'O':
+			{
+				switch (buffer[1])
+				{
+					case 'P': ret = 170; break; // F1
+					case 'Q': ret = 171; break; // F2
+					case 'R': ret = 172; break; // F3
+					case 'S': ret = 173; break; // F4
+					default: *(int*)0 = 0;
+				}
+				break;
+			}
+			case '[':
+			{
+				switch (buffer[1])
+				{
+					case '1': case '2':
+					{
+						read(STDIN_FILENO, &buffer, 2);
+						switch (buffer[0])
+						{
+							case '5': ret = 174; break; // F5
+							case '7': ret = 175; break;	// F6
+							case '8': ret = 176; break;	// F7
+							case '9': ret = 177; break;	// F8
+							case '0': ret = 178; break; // F9
+							case '1': ret = 179; break; // F10
+							case '3': ret = 180; break; // F11
+							case '4': ret = 181; break; // F12
+							case '~': ret = 182; break; // Insert
+						}
+						break;
+					}
+					case '3': ret = 183; read(STDIN_FILENO, buffer, 1); break; // Delete
+					case 'H': ret = 184; break;	// Home
+					case 'F': ret = 185; break; // End
+					case '5': ret = 186; read(STDIN_FILENO, buffer, 1); break; // PageUp
+					case '6': ret = 187; read(STDIN_FILENO, buffer, 1); break; // PageDn
+					case 'A': ret = 188; break; // ArrowUp
+					case 'B': ret = 189; break; // ArrowDown
+					case 'C': ret = 190; break; // ArrowRight
+					case 'D': ret = 191; break; // ArrowLeft
+				}
+				break;
+			}
+		}
+	}
 	return ret;
 }
 
