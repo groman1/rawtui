@@ -36,11 +36,13 @@ void init()
 	cfmakeraw(&terminal);
 	tcsetattr(STDIN_FILENO, 0, &terminal);
 	initcolorpair(0, WHITE, BLACK);
+	write(STDOUT_FILENO, "\x1b[?1049h", 8);
 }
 
 void deinit()
 {
 	tcsetattr(STDIN_FILENO, 0, &originalterminal);
+	write(STDOUT_FILENO, "\x1b[?1049l", 8);
 }
 
 
