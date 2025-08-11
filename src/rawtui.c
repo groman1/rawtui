@@ -36,9 +36,16 @@ void init()
 	cfmakeraw(&terminal);
 	tcsetattr(STDIN_FILENO, 0, &terminal);
 	initcolorpair(0, WHITE, BLACK);
-	write(STDOUT_FILENO, "\x1b[224;75;170", 12);
-	write(STDOUT_FILENO, "\x1b[224;75;170", 12);
-	write(STDOUT_FILENO, "\x1b[?1049h", 8);
+	write(STDOUT_FILENO, "\x1b[?1049h", 8); // alternative buffer
+}
+
+void initinline()
+{
+	tcgetattr(STDIN_FILENO, &originalterminal);
+	struct termios terminal;
+	cfmakeraw(&terminal);
+	tcsetattr(STDIN_FILENO, 0, &terminal);
+	initcolorpair(0, WHITE, BLACK);
 }
 
 void deinit()

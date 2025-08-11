@@ -23,6 +23,7 @@
 #define COLORPAIR(color) color<<5
 
 void init();
+void initinline();
 void deinit();
 void setcursor(uint8_t visible);
 void move(uint16_t y, uint16_t x);

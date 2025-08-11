@@ -1,7 +1,8 @@
 # RawTUI by groman1
 A lightweight TUI library for Unix written in C
 # Documentation
-init() : enable raw mode and save the terminal state\
+init() : enable raw mode and enable alternative buffer\
+initinline() : enable raw mode without alternative buffer, can be useful for inline text modification\
 deinit() : return to cooked mode\
 setcursor(uint8_t status) : show/hide cursor (1/0)\
 move(uint16_t y, uint16_t x) : move cursor to y,x coordinates\
