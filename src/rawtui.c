@@ -108,7 +108,6 @@ uint8_t inesc()
 					case 'Q': ret = 171; break; // F2
 					case 'R': ret = 172; break; // F3
 					case 'S': ret = 173; break; // F4
-					default: *(int*)0 = 0;
 				}
 				break;
 			}
@@ -175,6 +174,11 @@ void wrattr(attr_t attr)
 void clear()
 {
 	write(STDOUT_FILENO, "\x1b[2J", 4);
+}
+
+void cleartobot()
+{
+	write(STDOUT_FILENO, "\x1bJ", 3);
 }
 
 void getTermXY(uint16_t *y, uint16_t *x)

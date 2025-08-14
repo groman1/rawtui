@@ -31,6 +31,7 @@ void initcolorpair(uint8_t id, uint8_t foreground, uint8_t background);
 uint8_t in();
 uint8_t inesc();
 void clear();
+void cleartobot();
 void saveCursorPos();
 void loadCursorPos();
 void wrattr(attr_t attr);
