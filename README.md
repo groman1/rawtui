@@ -17,9 +17,11 @@ getTermXY(uint16_t \*y, uint16_t \*x) : loads terminal width and height into x a
 getCursorPos(uint16_t \*y, uint16_t \*x) : loads current cursor location into x and y\
 wrattr(attr_t attr) : sets attribute to attr, use bitmasking with NORMAL, BLINK, REVERSE, BOLD, FAINT, macro COLORPAIR\
 print(char \*string) : writes string to stdout\
+printsize(char \* string, int len) : writes first **len** bytes of string to stdout\
 initcolorpair(uint8_t id, uint8_t foreground, uint8_t background) : create a color pair with foreground and background specified with id from 1 to 7 (using 0 is not recommended as it is the default color pair)
 COLORPAIR(pair) : use with wrattr as attribute\
-moveprint(uint16_t y, uint16_t x, char \*string) : move to y,x and print string
+moveprint(uint16_t y, uint16_t x, char \*string) : move to y,x and print string\
+moveprintsize(uint16_t y, uint16_t x, char \*string, int len) : move to y,x and print first **len** bytes of string
 # Notes and limitations
 - RawTUI cant write to locations further than 998, 998
 - For printing formatted text use dprintf(STDOUT_FILENO, **format**) or sprintf text into string and use print(char \*string)

@@ -39,6 +39,8 @@ void getTermXY(uint16_t *y, uint16_t *x);
 void getCursorPos(uint16_t *y, uint16_t *x);
 void clearline();
 void print(char *string);
+void printsize(char *string, int len);
 void moveprint(uint16_t y, uint16_t x, char *string);
+void moveprintsize(uint16_t y, uint16_t x, char *string, int len);
 
 #endif

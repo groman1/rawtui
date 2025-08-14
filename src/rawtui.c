@@ -220,9 +220,20 @@ void clearline()
 	write(STDOUT_FILENO, "\x1b[2K", 4);
 }
 
+void printsize(char *string, int len)
+{
+	write(STDOUT_FILENO, string, len);
+}
+
+void moveprintsize(uint16_t y, uint16_t x, char *string, int len)
+{
+	move(y,x);
+	printsize(string, len);
+}
+
 void print(char *string)
 {
-	write(STDOUT_FILENO, string, strlen(string));
+	printsize(string, strlen(string));
 }
 
 void moveprint(uint16_t y, uint16_t x, char *string)
