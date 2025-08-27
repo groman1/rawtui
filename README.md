@@ -8,6 +8,7 @@ setcursor(uint8_t status) : show/hide cursor (1/0)\
 move(uint16_t y, uint16_t x) : move cursor to y,x coordinates\
 clear() : clears the screen\
 clearline() : clears the line the cursor is located on\
+cleartoeol() : clears from cursor to end of line\
 cleartobot() : clears from cursor to bottom\
 saveCursorPos() : saves cursor position\
 in() : get the last integer of a keypress, doesnt provide accurate information for all keys but is faster than inesc()\
