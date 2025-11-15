@@ -163,7 +163,7 @@ void wrattr(attr_t attr)
 	if (attr&BOLD) write(STDOUT_FILENO, "\x1b[1m", 4);
 	if (attr&FAINT) write(STDOUT_FILENO, "\x1b[2m", 4);
 	if (attr&REVERSE) write(STDOUT_FILENO, "\x1b[7m", 4);
-	if (attr&0xF==NORMAL) write(STDOUT_FILENO, "\x1b[0m", 4);
+	if ((attr&0xF)==NORMAL) write(STDOUT_FILENO, "\x1b[0m", 4);
 	char colorstring[8] = "\x1b[39;49m";
 	if (attr>>4)
 	{
