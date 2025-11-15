@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "rawtui.h"
 
-// Example program: prints every key pressed and terminal rows/columns
+// Example program: prints every key pressed with underline and terminal rows/columns
 
 int main()
 {
@@ -16,13 +16,14 @@ int main()
 	move(y/2-2,x/2-3);
 	dprintf(STDOUT_FILENO, "%d:%d", y, x);
 	initcolorpair(1, BLACK, RED);
-	wrattr(COLORPAIR(1));
+	wrcolorpair(1);
 	do
 	{
 		move(y/2, x/2-1);
 		wrattr(NORMAL);
 		clearline(); // if you use color and call clearline, the line will be filled with that color, so we need to disable it first
-		wrattr(COLORPAIR(1));
+		wrattr(UNDERLINE);
+		wrcolorpair(1);
 		dprintf(STDOUT_FILENO, "%u", code);
 	}
 	while((code=inesc())!=3);

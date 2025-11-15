@@ -5,24 +5,25 @@ init() : enable raw mode and enable alternative buffer\
 initinline() : enable raw mode without alternative buffer, can be useful for inline text modification\
 deinit() : return to cooked mode\
 setcursor(uint8_t status) : show/hide cursor (1/0)\
-move(uint16_t y, uint16_t x) : move cursor to y,x coordinates\
+move(uint16_t y, uint16_t x) : move cursor to **y**, **x** coordinates\
 clear() : clears the screen\
 clearline() : clears the line the cursor is located on\
 cleartoeol() : clears from cursor to end of line\
 cleartobot() : clears from cursor to bottom\
 saveCursorPos() : saves cursor position\
-in() : get the last integer of a keypress, doesnt provide accurate information for all keys but is faster than inesc()\
+in() : get the last integer of a keypress, doesnt provide accurate information for all keys but is always instant unlike inesc()\
 inesc() : get the full keypress id, read notes\
 loadCursorPos() : loads cursor position previously saved by saveCursorPos()\
-getTermXY(uint16_t \*y, uint16_t \*x) : loads terminal width and height into x and y\
-getCursorPos(uint16_t \*y, uint16_t \*x) : loads current cursor location into x and y\
-wrattr(attr_t attr) : sets attribute to attr, use bitmasking with NORMAL, BLINK, REVERSE, BOLD, FAINT, macro COLORPAIR\
+getTermXY(uint16_t \*y, uint16_t \*x) : loads terminal width and height into **x** and **y**\
+getCursorPos(uint16_t \*y, uint16_t \*x) : loads current cursor location into **x** and **y**\
+wrattr(attr_t attr) : sets attribute to attr, use bitmasking with NORMAL, UNDERLINE, REVERSE, BOLD, FAINT\
+wrcolorpair(colorpair_t colorpair) : sets colorpair to **colorpair**
 print(char \*string) : writes string to stdout\
 printsize(char \* string, int len) : writes first **len** bytes of string to stdout\
-initcolorpair(uint8_t id, uint8_t foreground, uint8_t background) : create a color pair with foreground and background specified with id from 1 to 7 (using 0 is not recommended as it is the default color pair)
+initcolorpair(uint8_t id, uint8_t foreground, uint8_t background) : create a color pair with **foreground** and **background** specified with id **id** (using 0 is not recommended as it is the default color pair)
 COLORPAIR(pair) : use with wrattr as attribute\
-moveprint(uint16_t y, uint16_t x, char \*string) : move to y,x and print string\
-moveprintsize(uint16_t y, uint16_t x, char \*string, int len) : move to y,x and print first **len** bytes of string
+moveprint(uint16_t y, uint16_t x, char \*string) : move to **y**, **x** and print **string**\
+moveprintsize(uint16_t y, uint16_t x, char \*string, int len) : move to **y**, **x** and print first **len** bytes of **string**
 # Notes and limitations
 - RawTUI cant write to locations further than 998, 998
 - For printing formatted text use dprintf(STDOUT_FILENO, **format**) or sprintf text into string and use print(char \*string)
