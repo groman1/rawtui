@@ -1,6 +1,11 @@
 #include <stdint.h>
+#include <unistd.h>
 #include <stdio.h>
 #include "rawtui.h"
+
+#ifdef _WIN32
+#define dprintf(output, ...) printf(__VA_ARGS__)
+#endif
 
 // Example program: prints every key pressed with underline and terminal rows/columns
 
@@ -20,17 +25,18 @@ int main()
 	do
 	{
 		move(y/2, x/2-1);
+		wrcolorpair(0);
 		wrattr(NORMAL);
 		clearline(); // if you use color and call clearline, the line will be filled with that color, so we need to disable it first
-		wrattr(UNDERLINE);
 		wrcolorpair(1);
+		wrattr(UNDERLINE);
 		dprintf(STDOUT_FILENO, "%u", code);
 	}
 	while((code=inesc())!=3);
+	wrcolorpair(0);
 	wrattr(NORMAL);
-	clear();
 	setcursor(1);
-	move(0,0);
+	clear();
 	deinit();
 	return 0;
 }

@@ -1,7 +1,7 @@
-#include <unistd.h>
-#include <stdint.h>
 #ifndef RAWTUI_H_
 #define RAWTUI_H_
+
+#include <stdint.h>
 
 #define colorpair_t uint8_t
 #define attr_t uint8_t
@@ -13,6 +13,7 @@
 #define REVERSE 1<<3
 #define UNDERLINE 1<<4
 
+#ifndef _WIN32
 #define BLACK 0
 #define	RED 1
 #define GREEN 2
@@ -21,6 +22,16 @@
 #define MAGENTA 5
 #define CYAN 6
 #define WHITE 7
+#else
+#define BLACK 0
+#define BLUE 1
+#define GREEN 2
+#define CYAN 3
+#define RED 4
+#define PINK 5
+#define YELLOW 6
+#define WHITE 7
+#endif
 
 void init();
 void initinline();
@@ -41,6 +52,7 @@ void getTermXY(uint16_t *y, uint16_t *x);
 void getCursorPos(uint16_t *y, uint16_t *x);
 void clearline();
 void print(char *string);
+void printc(char c);
 void printsize(char *string, int len);
 void moveprint(uint16_t y, uint16_t x, char *string);
 void moveprintsize(uint16_t y, uint16_t x, char *string, int len);
