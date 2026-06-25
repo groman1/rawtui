@@ -1,5 +1,5 @@
 # RawTUI by groman1
-A lightweight TUI library for Unix written in C
+A lightweight TUI library for Unix and experimental support for Windows written in C.
 # Documentation
 init() : enable raw mode and enable alternative buffer\
 initinline() : enable raw mode without alternative buffer, can be useful for inline text modification\
@@ -21,11 +21,14 @@ wrcolorpair(colorpair_t colorpair) : sets colorpair to **colorpair**
 print(char \*string) : writes string to stdout\
 printsize(char \* string, int len) : writes first **len** bytes of string to stdout\
 initcolorpair(uint8_t id, uint8_t foreground, uint8_t background) : create a color pair with **foreground** and **background** specified with id **id** (using 0 is not recommended as it is the default color pair)
-COLORPAIR(pair) : use with wrattr as attribute\
 moveprint(uint16_t y, uint16_t x, char \*string) : move to **y**, **x** and print **string**\
 moveprintsize(uint16_t y, uint16_t x, char \*string, int len) : move to **y**, **x** and print first **len** bytes of **string**
 # Notes and limitations
 - RawTUI cant write to locations further than 998, 998
 - For printing formatted text use dprintf(STDOUT_FILENO, **format**) or sprintf text into string and use print(char \*string)
-- You can only create 8 color pairs
+- You can only create 16 color pairs
 - For keycodes of key F1-F12, Delete, Insert, Home, End, PageUp/Down, Arrow keys see inesc() function in src/rawtui.c or use example
+## Windows port limitations
+- The clear\*() functions work only on versions that support ANSI Escape Sequences (Windows 10 or later)
+# Advantages over libraries like ncurses
+- The escape key is detected without any delay (you don't need to press escape twice for it to register), and this way the combinations like ESC-Arrow Up produce accurate results
